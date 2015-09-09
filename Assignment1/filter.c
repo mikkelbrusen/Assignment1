@@ -18,7 +18,7 @@ void filter(){
 
 	struct LPStructure LPS = {
 		.h = 0,
-		.x = x_temp,
+		.x = {0},
 		.y = 0,
 		.y1 = 0,
 		.y2 = 0
