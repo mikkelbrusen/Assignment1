@@ -2,7 +2,20 @@
 #include <stdlib.h>
 #include "sensor.h"
 
+static const char ECG[] = "ECG.txt";
+FILE *file;
+
 int getNextData(){
-	// Implement me according to the Assignment 1 manual
-	return 0;
+
+	int value;
+
+	if(fscanf(file,"%i",&value) != EOF) {
+		return value;
+	} else{
+		return NULL;
+	}
+}
+
+void readFile(){
+	file = fopen(ECG,"r");
 }
