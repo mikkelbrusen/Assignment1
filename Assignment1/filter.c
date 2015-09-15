@@ -1,5 +1,6 @@
 #include "filters.h"
 #include "sensor.h"
+#include <stdlib.h>
 
 struct LPStructure{
 	int h;
@@ -39,16 +40,20 @@ void filter(){
 	};
 
 	struct DeStructure DeS = {
-			.h = 0,
-			.x = {0},
-			.y = 0
-		};
+		.h = 0,
+		.x = {0},
+		.y = 0
+	};
 
-	for(i=0; i<200; i++){
+	int sq;
+
+	// TODO: Find another way to end while loop
+	while(temp != 9999){
 		LPS = lowPass(LPS,temp);
 		HPS = highPass(HPS,LPS.y);
 		DeS = derivative(DeS,HPS.y);
-		printf("%i \n",(DeS.y));
+		sq = squaring(DeS.y);
+		printf("%i \n",(sq));
 
 		temp = getNextData();
 	}
