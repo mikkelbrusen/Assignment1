@@ -21,6 +21,12 @@ struct DeStructure{
 	int y;
 };
 
+struct MWIStructure{
+	int h;
+	int x[30];
+	int y;
+};
+
 void filter(){
 
 	int temp = getNextData();
@@ -45,6 +51,12 @@ void filter(){
 		.y = 0
 	};
 
+	struct MWIStructure MWIS = {
+		.h = 0,
+		.x = {0},
+		.y = 0
+	};
+
 	int sq;
 
 	// TODO: Find another way to end while loop
@@ -53,7 +65,8 @@ void filter(){
 		HPS = highPass(HPS,LPS.y);
 		DeS = derivative(DeS,HPS.y);
 		sq = squaring(DeS.y);
-		printf("%i \n",(sq));
+		MWIS = movingWI(MWIS,sq);
+		printf("%i \n",(MWIS.y));
 
 		temp = getNextData();
 	}
