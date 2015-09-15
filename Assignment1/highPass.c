@@ -3,13 +3,12 @@
 
 struct HPStructure{
 	int h;
-	int x[32];
+	int x[33];
 	int y;
-
 };
 
-struct HPStructure highPass(struct HPStructure a, ){
-	struct LPStructure b;
+struct HPStructure highPass(struct HPStructure a, int lpValue ){
+	struct HPStructure b;
 	b = a;
 	int x0;
 	int x16;
@@ -17,19 +16,21 @@ struct HPStructure highPass(struct HPStructure a, ){
 	int x32;
 	int h = a.h;
 
-	a.x[h] = /*output fra LPS x*/;
-	b.x[h] = /*output fra LPS y*/;
+	a.x[h] = lpValue;
+	b.x[h] = lpValue;
 
 	x0 = a.x[h];
-	h = (h+6)%13;
+	h = (h+16)%33;
 
-	x6 = a.x[h];
-	h = (h+6)%13;
+	x16 = a.x[h];
+	h = (h+1)%33;
 
-	x12 = a.x[h];
+	x17 = a.x[h];
+	h = (h+15)%33;
 
-	b.y = 2*a.y - a.y1 + ((1.0/32.0)*(x0 - 2*x6 + x12));
-	b.y1 = a.y;
+	x32 = a.x[h];
+
+	b.y = a.y - (x0/32.0) + x16 - x17 + (x32/32.0);
 	b.h = h;
 
 	return b;

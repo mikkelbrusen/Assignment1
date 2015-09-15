@@ -6,8 +6,6 @@ struct LPStructure{
 	int x[13];
 	int y;
 	int y1;
-	int y2;
-
 };
 
 struct LPStructure lowPass(struct LPStructure a, int signal){
