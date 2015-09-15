@@ -1,5 +1,6 @@
 #include "filters.h"
 #include "structures.h"
+#include <math.h>
 
 struct LPStructure{
 	int h;
@@ -27,6 +28,7 @@ struct LPStructure lowPass(struct LPStructure a, int signal){
 
 	x12 = a.x[h];
 
+	// TODO: Delete 0.5f when done prototyping
 	b.y = 2*a.y - a.y1 + ((1.0/32.0)*(x0 - 2*x6 + x12));
 	b.y1 = a.y;
 	b.h = h;

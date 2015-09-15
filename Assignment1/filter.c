@@ -14,6 +14,12 @@ struct HPStructure{
 	int y;
 };
 
+struct DeStructure{
+	int h;
+	int x[5];
+	int y;
+};
+
 void filter(){
 
 	int temp = getNextData();
@@ -32,10 +38,17 @@ void filter(){
 		.y = 0
 	};
 
-	for(i=0; i<20; i++){
+	struct DeStructure DeS = {
+			.h = 0,
+			.x = {0},
+			.y = 0
+		};
+
+	for(i=0; i<200; i++){
 		LPS = lowPass(LPS,temp);
 		HPS = highPass(HPS,LPS.y);
-		printf("%i \n",HPS.y);
+		DeS = derivative(DeS,HPS.y);
+		printf("%i \n",(DeS.y));
 
 		temp = getNextData();
 	}
