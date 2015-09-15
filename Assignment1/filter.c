@@ -14,7 +14,6 @@ void filter(){
 
 	int temp = getNextData();
 	int i;
-	int x_temp[13] = {0};
 
 	struct LPStructure LPS = {
 		.h = 0,
@@ -27,7 +26,6 @@ void filter(){
 	for(i=0; i<20; i++){
 		LPS = lowPass(LPS,temp);
 		printf("%i \n",LPS.y);
-
 
 		temp = getNextData();
 	}
