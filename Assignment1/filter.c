@@ -6,8 +6,6 @@ struct LPStructure{
 	int x[13];
 	int y;
 	int y1;
-	int y2;
-
 };
 
 void filter(){
@@ -20,11 +18,11 @@ void filter(){
 		.x = {0},
 		.y = 0,
 		.y1 = 0,
-		.y2 = 0
 	};
 
 	for(i=0; i<20; i++){
 		LPS = lowPass(LPS,temp);
+		HPS = highPass(HPS,LPS.y)
 		printf("%i \n",LPS.y);
 
 		temp = getNextData();
