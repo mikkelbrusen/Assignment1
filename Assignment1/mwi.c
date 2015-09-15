@@ -7,31 +7,21 @@ struct MWIStructure{
 	int y;
 };
 
-struct MWIStructure movingWI(struct MWStructure a, int sqValue ){
-	struct DeStructure b;
+struct MWIStructure movingWI(struct MWIStructure a, int sqValue ){
+	struct MWIStructure b;
 	b = a;
-	int x29;
-	int x1;
-	int x3;
-	int x4;
 	int h = a.h;
+	int x_sum = 0;
 
-	a.x[h] = hpValue;
-	b.x[h] = hpValue;
+	a.x[h] = sqValue;
+	b.x[h] = sqValue;
 
-	x0 = a.x[h];
-	h = (h+1)%5;
+	for(int i = 0;i<30;i++){
+		 x_sum += a.x[i];
+	}
 
-	x1 = a.x[h];
-	h = (h+2)%5;
-
-	x3 = a.x[h];
-	h = (h+1)%5;
-
-	x4 = a.x[h];
-
-	b.y = ((1.0/8.0)*((2.0*x0)+x1+x3+(2.0*x4)));
-	b.h = h;
+	b.h = (h+1)%30;
+	b.y = (1/30.0)*x_sum;
 
 	return b;
 }
