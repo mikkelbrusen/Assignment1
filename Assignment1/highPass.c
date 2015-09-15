@@ -30,7 +30,8 @@ struct HPStructure highPass(struct HPStructure a, int lpValue ){
 
 	x32 = a.x[h];
 
-	b.y = a.y - (x0/32.0) + x16 - x17 + (x32/32.0);
+	// TODO: Delete 0.5f when done prototyping
+	b.y = a.y - (x0/32.0) + x16 - x17 + (x32/32.0)+ 0.5f;
 	b.h = h;
 
 	return b;
