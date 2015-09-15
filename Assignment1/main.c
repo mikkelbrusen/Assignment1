@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include "sensor.h"
+#include "filters.h"
 
 int main() {
 
 	readFile();
 
-	printf("%i \n",getNextData());
-	printf("%i \n",getNextData());
+	filter();
 
 	return 0;
 }
