@@ -30,7 +30,7 @@ struct DeStructure derivative(struct DeStructure a, int hpValue ){
 
 	x4 = a.x[h];
 
-	b.y = ((1.0/8.0)*((2.0*x0)+x1+x3+(2.0*x4)));
+	b.y = ((1.0/8.0)*((2.0*x0)+x1-x3-(2.0*x4)));
 	b.h = h;
 
 	return b;

@@ -10,7 +10,7 @@ int getNextData(){
 	if(fscanf(file,"%i",&value) != EOF) {
 		return value;
 	} else{
-		return NULL;
+		return 9999;
 	}
 }
 
