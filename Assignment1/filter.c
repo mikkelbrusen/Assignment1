@@ -11,6 +11,7 @@ void filter(){
 	int DE;
 	int SQ;
 	int MWI;
+	int RPeak;
 
 	for(int i = 0; i<2; i++){
 		LP = lowPass(temp);
@@ -18,6 +19,7 @@ void filter(){
 		DE = derivative(HP);
 		SQ = squaring(DE);
 		MWI = movingWI(SQ);
+		gatherFT(MWI,i);
 
 		printf("%i \n",MWI);
 		temp = getNextData();
@@ -30,8 +32,10 @@ void filter(){
 		DE = derivative(HP);
 		SQ = squaring(DE);
 		MWI = movingWI(SQ);
-
-		printf("%i \n",MWI);
+		RPeak = detect(MWI);
+		if(RPeak){
+			printf("%i \n",RPeak);
+		}
 		temp = getNextData();
 	}
 
