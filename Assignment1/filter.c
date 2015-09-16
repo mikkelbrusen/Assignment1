@@ -12,6 +12,17 @@ void filter(){
 	int SQ;
 	int MWI;
 
+	for(int i = 0; i<2; i++){
+		LP = lowPass(temp);
+		HP = highPass(LP);
+		DE = derivative(HP);
+		SQ = squaring(DE);
+		MWI = movingWI(SQ);
+
+		printf("%i \n",MWI);
+		temp = getNextData();
+	}
+
 	// TODO: Find another way to end while loop
 	while(temp != 9999){
 		LP = lowPass(temp);
@@ -19,8 +30,8 @@ void filter(){
 		DE = derivative(HP);
 		SQ = squaring(DE);
 		MWI = movingWI(SQ);
-		printf("%i \n",MWI);
 
+		printf("%i \n",MWI);
 		temp = getNextData();
 	}
 
