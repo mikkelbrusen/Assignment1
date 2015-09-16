@@ -1,8 +1,12 @@
 #include "filters.h"
 
-/*
+static int x[3] = {0};
 
-struct detectStructure{
+void gatherFT(int dataInput, int index){
+	x[index] = dataInput;
+}
+
+/*struct DetStructure{
 	int h;
 	int x[3];
 
@@ -10,8 +14,8 @@ struct detectStructure{
 	int peaks[30];
 };
 
-struct detectStructure detect(struct detectStructure a, int mwiValue ){
-	struct detectStructure b;
+struct DetStructure detect(struct DetStructure a, int mwiValue ){
+	struct DetStructure b;
 	b = a;
 
 	int xMin1, x0, xPlus1;
@@ -31,9 +35,50 @@ struct detectStructure detect(struct detectStructure a, int mwiValue ){
 
 	xPlus1 = a.x[h];
 
+	int state = 0;
+*/
+	switch(state){
+
+		case 0 :
+			if (xMin1 < x0 && x0 > xPlus1){
+			state = 1;
+			}
+			else {
+				state = 99;
+			}
+			break;
+		case 1 :
+			//Store in PEAKS
+			state = 2;
+			break;
+		case 2 :
+			//check with threshold
+			if(peak > threshold1){
+				npkf = 0.125*x0 + 0.875*npkf;
+				threshold1 = npkf + 0.25*(spkf-npkf);
+				threshold2 = 0.5*threshold2;
+
+				state = 99;
+			}
+			else{
+				state = 3;
+			}
+			break;
+		case 3 :
+			//calculate RR
+			state = 4;
+			break;
+		case 4 :
+			if(RR_low<RR)
+
+
+		case 99 :
+			return 0;
+	}
+}
+
 	// Equation5
 	if (xMin1 < x0 && x0 > xPlus1){
-
 	}
 
 	// Equation6
@@ -53,7 +98,6 @@ struct detectStructure detect(struct detectStructure a, int mwiValue ){
 
 
 }
-*/
 
 
 
