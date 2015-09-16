@@ -1,38 +1,28 @@
 #include "filters.h"
-#include "structures.h"
 #include <math.h>
 
-struct LPStructure{
-	int h;
-	int x[13];
-	int y;
-	int y1;
-};
 
-struct LPStructure lowPass(struct LPStructure a, int signal){
-	struct LPStructure b;
-	b = a;
-	int x0;
-	int x6;
-	int x12;
-	int h = a.h;
+int lowPass(int signal){
+	static int h = 0;
+	static int x0 = 0;
+	static int x6 = 0;
+	static int x12 = 0;
+	static int x[13] = {0};
+	static int y[3] = {0};
 
-	a.x[h] = signal;
-	b.x[h] = signal;
+	x[h] = signal;
+	x0 = signal;
 
-	x0 = a.x[h];
 	h = (h+6)%13;
+	x6 = x[h];
 
-	x6 = a.x[h];
 	h = (h+6)%13;
+	x12 = x[h];
 
-	x12 = a.x[h];
+	y[2] = y[1];
+	y[1] = y[0];
+	y[0] = 2*y[1] - y[2] + ((1.0/32.0)*(x0 - 2*x6 + x12));
 
-	// TODO: Delete 0.5f when done prototyping
-	b.y = 2*a.y - a.y1 + ((1.0/32.0)*(x0 - 2*x6 + x12));
-	b.y1 = a.y;
-	b.h = h;
-
-	return b;
+	return y[0];
 }
 

@@ -1,39 +1,29 @@
 #include "filters.h"
-#include "structures.h"
 
-struct HPStructure{
-	int h;
-	int x[33];
-	int y;
-};
+int highPass( int lpValue ){
+	static int x0 = 0;
+	static int x16 = 0;
+	static int x17 = 0;
+	static int x32 = 0;
+	static int h = 0;
+	static int x[33] = {0};
+	static int y[2] = {0};
 
-struct HPStructure highPass(struct HPStructure a, int lpValue ){
-	struct HPStructure b;
-	b = a;
-	int x0;
-	int x16;
-	int x17;
-	int x32;
-	int h = a.h;
+	x[h] = lpValue;
+	x0 = lpValue;
 
-	a.x[h] = lpValue;
-	b.x[h] = lpValue;
-
-	x0 = a.x[h];
 	h = (h+16)%33;
+	x16 = x[h];
 
-	x16 = a.x[h];
 	h = (h+1)%33;
+	x17 = x[h];
 
-	x17 = a.x[h];
 	h = (h+15)%33;
+	x32 = x[h];
 
-	x32 = a.x[h];
+	y[1] = y[0];
+	y[0] = y[1] - (x0/32.0) + x16 - x17 + (x32/32.0);
 
-	// TODO: Delete 0.5f when done prototyping
-	b.y = a.y - (x0/32.0) + x16 - x17 + (x32/32.0);
-	b.h = h;
-
-	return b;
+	return y[0];
 }
 

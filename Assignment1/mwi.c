@@ -1,29 +1,21 @@
 #include "filters.h"
-#include "structures.h"
 
-struct MWIStructure{
-	int h;
-	int x[30];
+int movingWI( int sqValue ){
+	static int h = 0;
+	static int x[30] = {0};
 	int y;
-};
-
-struct MWIStructure movingWI(struct MWIStructure a, int sqValue ){
-	struct MWIStructure b;
-	b = a;
-	int h = a.h;
 	int x_sum = 0;
 
-	a.x[h] = sqValue;
-	b.x[h] = sqValue;
+	x[h] = sqValue;
 
 	for(int i = 0;i<30;i++){
-		 x_sum += a.x[i];
+		 x_sum += x[i];
 	}
 
-	b.h = (h+1)%30;
-	b.y = (1/30.0)*x_sum;
+	h = (h+1)%30;
+	y = (1/30.0)*x_sum;
 
-	return b;
+	return y;
 }
 
 
