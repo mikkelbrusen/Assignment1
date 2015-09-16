@@ -22,7 +22,7 @@ int highPass( int lpValue ){
 	x32 = x[h];
 
 	y[1] = y[0];
-	y[0] = y[1] - (x0/32.0) + x16 - x17 + (x32/32.0);
+	y[0] = y[1] - (x0/32) + x16 - x17 + (x32/32);
 
 	return y[0];
 }

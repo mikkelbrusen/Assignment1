@@ -13,7 +13,7 @@ int movingWI( int sqValue ){
 	}
 
 	h = (h+1)%30;
-	y = (1/30.0)*x_sum;
+	y = x_sum/30;
 
 	return y;
 }

@@ -21,7 +21,7 @@ int derivative(int hpValue ){
 	h = (h+1)%5;
 	x4 = x[h];
 
-	y = ((1.0/8.0)*((2.0*x0)+x1-x3-(2.0*x4)));
+	y = ((2*x0)+x1-x3-(2*x4))/8;
 
 	return y;
 }
