@@ -1,5 +1,4 @@
 #include "filters.h"
-#include "structures.h"
 
 struct detectStructure{
 	int h;
