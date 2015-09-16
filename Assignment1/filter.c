@@ -1,6 +1,7 @@
 #include "filters.h"
 #include "sensor.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct LPStructure{
 	int h;
@@ -30,7 +31,6 @@ struct MWIStructure{
 void filter(){
 
 	int temp = getNextData();
-	int i;
 
 	struct LPStructure LPS = {
 		.h = 0,
