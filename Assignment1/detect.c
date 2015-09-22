@@ -121,6 +121,12 @@ void searchBack(){
 	}
 }
 
+void checkRRMiss(int x){
+	if(x>rr_miss){
+		searchBack();
+	}
+}
+
 
 
 
