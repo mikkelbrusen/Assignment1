@@ -41,7 +41,10 @@ void storeRPeak(int x){
 	//Vi skal tælle hvor mange iterationer der har været siden sidste peak
 
 }
-*/
+
+void peak2Update(int x){
+	storeRPeak
+}
 
 
 
