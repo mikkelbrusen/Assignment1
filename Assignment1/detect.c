@@ -67,6 +67,19 @@ int calcRRAve(int x[]){
 	return average;
 }
 
+void searchBack(){
+	int hsB = hpeaks;
+	for (int i=0; i<500; i++) {
+		if(peaks[hsB] > threshold2) {
+			storeRPeak(peaks[hsB]);
+			peak2Update();
+			break;
+		} else {
+			hsB = (hsB + 499) % 500;
+		}
+	}
+}
+
 
 
 
