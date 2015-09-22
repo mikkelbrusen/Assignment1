@@ -14,12 +14,13 @@ void searchBack();
 static int x[3] = {0};
 static int spkf, npkf, threshold1, threshold2;
 static int rr,rr_average1, rr_average2, rr_low, rr_high, rr_miss;
-//timer der tæller
-static int rPeak[500]= {0};
+static int rPeak[500][500]= {0};
 static int recentRR_OK[500]= {0};
 static int recentRR[500] = {0};
 static int peaks[500] = {0};
 static int hpeaks = 0;
+static int timer = 0;
+static int hRPeak = 0;
 
 //Reads in the first two data points
 void gatherFT(int mwiValue, int index){
@@ -27,7 +28,7 @@ void gatherFT(int mwiValue, int index){
 }
 
 void detect(int mwiValue ){
-	//TODO: Increment timer
+	timer++;
 	x[2] = mwiValue;
 	if (x[0] < x[1] && x[1] > x[2]){
 		//TODO: Store time in peak timer array
@@ -52,8 +53,8 @@ void checkThreshold(int x){
 }
 
 void checkForRR(int x,int y){
-	//Beregner RR (tiden fra sidste peak)
-	rr = x-y;
+	//TODO:Beregn RR (tiden fra sidste peak)
+
 	//Tjekker om det er en OK RR-interval
 	if(rr_low < rr && rr < rr_high){
 		storeRPeak(rr);
@@ -66,8 +67,7 @@ void checkForRR(int x,int y){
 }
 
 void storeRPeak(int x){
-	static int hRPeak = 0;
-	rPeak[hRPeak]=x;
+	rPeak[hRPeak][hRPeak]=timer,x;
 	hRPeak = (hRPeak + 1) % 500;
 }
 
