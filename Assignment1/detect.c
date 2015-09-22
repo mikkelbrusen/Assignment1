@@ -5,7 +5,7 @@ void storeRPeak(int);
 static int x[3] = {0};
 static int spkf, npkf, threshold1, threshold2;
 static int rr,rr_average1, rr_average2, rr_low, rr_high, rr_miss;
-static int rPeak[500][500]= {0};
+static int rPeak[2][500]= {0};
 static int recentRR_OK[500]= {0};
 static int recentRR[500] = {0};
 static int peaks[500] = {0};
@@ -43,9 +43,10 @@ void checkThreshold(int x){
 	}
 }
 
-void checkForRR(int x,int y){
-	//TODO:Beregn RR (tiden fra sidste peak)
-
+void checkForRR(int x,int){
+	//Beregner RR (tiden fra sidste peak)
+	//TODO:Tjek om hRPEAK+499)%500 er det rigtige (Sami)
+	rr = rPeak[1][hRPeak]-rPeak[1][(hRPeak+499)%500];
 	//Tjekker om det er en OK RR-interval
 	if(rr_low<rr<rr_high){
 		storeRPeak(rr);
@@ -58,7 +59,8 @@ void checkForRR(int x,int y){
 }
 
 void storeRPeak(int x){
-	rPeak[hRPeak][hRPeak]=timer,x;
+	rPeak[0][hRPeak]=x;
+	rPeak[1][hRPeak]=timer;
 	hRPeak = (hRPeak + 1) % 500;
 }
 
@@ -110,6 +112,7 @@ void searchBack(){
 		}
 	}
 }
+
 
 
 
