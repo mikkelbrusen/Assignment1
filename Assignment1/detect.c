@@ -11,6 +11,8 @@ static int recentRR_OK[500]= {0};
 static int recentRR[500] = {0};
 
 
+
+//Reads in the first two data points
 void gatherFT(int mwiValue, int index){
 	x[index] = mwiValue;
 }
@@ -19,6 +21,7 @@ int detect(int mwiValue ){
 	x[2] = mwiValue;
 	if (x[0] < x[1] && x[1] > x[2]){
 		//Store timer value
+		storePeak(x[1]);
 		checkThreshold(x[1]);
 		return 0; //should return something else than 0
 	}
@@ -69,6 +72,8 @@ void storeRecentOK(int x){
 
 
 
+
+}
 
 
 
