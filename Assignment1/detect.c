@@ -8,7 +8,7 @@ void storeRecentRR(int);
 void storeRecentOK(int);
 void peak2Update(int);
 void commonUpdate(int);
-int calcRRAve(int);
+int calcRRAve(int[]);
 void searchBack();
 
 static int x[3] = {0};
