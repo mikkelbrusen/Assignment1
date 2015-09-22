@@ -7,4 +7,4 @@ int squaring(int DeValue);
 void filter();
 
 void gatherFT(int mwiValue, int index);
-int detect(int mwiValue);
+void detect(int mwiValue);

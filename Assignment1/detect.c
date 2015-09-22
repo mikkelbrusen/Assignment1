@@ -1,7 +1,16 @@
 #include "filters.h"
 
+void storePeak(int);
 void checkThreshold(int);
+void checkForRR(int,int);
 void storeRPeak(int);
+void storeRecentRR(int);
+void storeRecentOK(int);
+void peak2Update(int);
+void commonUpdate(int);
+int calcRRAve(int);
+void searchBack();
+
 static int x[3] = {0};
 static int spkf, npkf, threshold1, threshold2;
 static int rr,rr_average1, rr_average2, rr_low, rr_high, rr_miss;
@@ -38,7 +47,7 @@ void checkThreshold(int x){
 	} else{
 		npkf = 0.125*x + 0.875*npkf;
 		threshold1 = npkf + 0.25*(spkf-npkf);
-		threshold2 = 0.5*threshold2;
+		threshold2 = 0.5*threshold1;
 	}
 }
 
@@ -46,12 +55,12 @@ void checkForRR(int x,int y){
 	//Beregner RR (tiden fra sidste peak)
 	rr = x-y;
 	//Tjekker om det er en OK RR-interval
-	if(rr_low<rr<rr_high){
+	if(rr_low < rr && rr < rr_high){
 		storeRPeak(rr);
 		storeRecentRR(rr);
 		storeRecentOK(rr);
 		rr_average2 = calcRRAve(recentRR_OK);
-		rr_average1 = calcRRAVE(recentRR);
+		rr_average1 = calcRRAve(recentRR);
 		commonUpdate(rr_average2);
 	}
 }
@@ -102,8 +111,7 @@ void searchBack(){
 	int hsB = hpeaks;
 	for (int i=0; i<500; i++) {
 		if(peaks[hsB] > threshold2) {
-			storeRPeak(peaks[hsB]);
-			peak2Update();
+			peak2Update(peaks[hsB]);
 			break;
 		} else {
 			hsB = (hsB + 499) % 500;
