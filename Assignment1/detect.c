@@ -42,8 +42,29 @@ void storeRPeak(int x){
 
 }
 
-void peak2Update(int x){
-	storeRPeak
+void peak2Update(int peak){
+	storeRPeak(peak);
+	spkf = 0.25*peak + 0.75*spkf;
+	storeRecentRR(rr);
+	rr_average1 = calcRRAve(recentRR);
+	commonUpdate(rr_average1);
+}
+
+void commonUpdate(int rr_av){
+	rr_low = 0.92*rr_av;
+	rr_high = 1.16*rr_av;
+	rr_miss = 1.66*rr_av;
+	threshold1 = npkf + 0.25*(spkf-npkf);
+	threshold2 = 0.5*threshold1;
+}
+
+int calcRRAve(int x[]){
+	int length = sizeof(x)/sizeof(x[0]);
+	int average = 0;
+	for(int i = 0; i<length; i++){
+		average += x[i];
+	}
+	return average;
 }
 
 
