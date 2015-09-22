@@ -2,7 +2,7 @@
 
 void storePeak(int);
 void checkThreshold(int);
-void checkForRR(int,int);
+void checkForRR();
 void storeRPeak(int);
 void storeRecentRR(int);
 void storeRecentOK(int);
@@ -44,7 +44,7 @@ void storePeak(int x){
 
 void checkThreshold(int x){
 	if(x > threshold1){
-		checkForRR(x);
+		checkForRR();
 	} else{
 		npkf = 0.125*x + 0.875*npkf;
 		threshold1 = npkf + 0.25*(spkf-npkf);
@@ -52,7 +52,7 @@ void checkThreshold(int x){
 	}
 }
 
-void checkForRR(int x,int){
+void checkForRR(){
 	//Beregner RR (tiden fra sidste peak)
 	//TODO:Tjek om hRPEAK+499)%500 er det rigtige (Sami)
 	rr = rPeak[1][hRPeak]-rPeak[1][(hRPeak+499)%500];
