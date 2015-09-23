@@ -42,12 +42,16 @@ void gatherFT(int mwiValue, int index){
 
 //Reads new data, and detects peaks
 void detect(int mwiValue ){
+	static int slope = 0;
 	//Increment timer each time we read a new value
 	timer++;
 	data[2] = mwiValue;
-	if (data[0] < data[1] && data[1] > data[2]){
+	if (data[1] > data[2] && slope){
 		storePeak(data[1]);
 		checkThreshold(data[1]);
+		slope = 0;
+	} else{
+
 	}
 	data[0]=data[1];
 	data[1]=data[2];
