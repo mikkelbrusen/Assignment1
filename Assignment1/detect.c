@@ -23,7 +23,7 @@ static int threshold1 = 1875;
 static int threshold2 = 938;
 static int rr;
 static int rr_average1 = 150;
-static int rr_average2 = 150;
+static int rr_average2 = 155;
 static int rr_low = 138;
 static int rr_high = 174;
 static int rr_miss = 249;
@@ -49,8 +49,8 @@ void detect(int mwiValue ){
 	static int slope = 0;
 	//Increment timer each time we read a new value
 	timer++;
-	if(timer>311){
-		//int test = 5/0;
+	if(timer==4682){
+		int test = 5;
 	}
 	data[2] = mwiValue;
 	if (data[1] > data[2] && slope){
@@ -83,8 +83,8 @@ void checkThreshold(int x){
 
 //Checking RRvalue if its higher than rr_low and lower than rr_high
 void checkForRR(){
-	//Calculating RR which is the time from the current peak to the last peak
 	static int rtprev = 0;
+	static int counter = 0;
 	rr = timer - rtprev;
 	rtprev = timer;
 	//Checks if interval is OK
@@ -95,8 +95,13 @@ void checkForRR(){
 		rr_average2 = calcRRAve(recentRR_OK,recentOKlength);
 		rr_average1 = calcRRAve(recentRR,recentRRlength);
 		commonUpdate(rr_average2);
-
+		counter = 0;
 	} else {
+		counter++;
+		if(counter>4){
+			printf("WARNING: DEAD MAN; Timer: %d \n",timer);
+			counter = 0;
+		}
 		checkRRMiss(rr);
 	}
 
@@ -114,7 +119,7 @@ void storeRPeak(int x){
 	if (x<2000){
 		printf("WARNING! Low R-peak");
 	}
-	printf("Latest R-peak: %d detected at %d \n", x, timer);
+	printf("Timer: %d ; R-peak: %d ; Threshold: %d \n", timer, x, threshold1);
 
 }
 
@@ -179,8 +184,9 @@ void searchBack(){
 }
 
 //Checks if RR value is higher than rr_miss - if not do nothing.
-void checkRRMiss(int x){
-	if(x>rr_miss){
+void checkRRMiss(int rr){
+	if(rr>rr_miss){
+		printf("hey");
 		searchBack();
 	}
 }
