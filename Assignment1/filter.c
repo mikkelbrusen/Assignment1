@@ -13,7 +13,7 @@ void filter(){
 	int MWI;
 	int RPeak;
 
-	/*
+
 	for(int i = 0; i<2; i++){
 		LP = lowPass(temp);
 		HP = highPass(LP);
@@ -22,9 +22,9 @@ void filter(){
 		MWI = movingWI(SQ);
 		gatherFT(MWI,i);
 
-		printf("%i \n",MWI);
+		// printf("%i \n",MWI);
 		temp = getNextData();
-	} */
+	}
 
 	// TODO: Find another way to end while loop
 	while(getNextDataValid()){
@@ -33,11 +33,10 @@ void filter(){
 		DE = derivative(HP);
 		SQ = squaring(DE);
 		MWI = movingWI(SQ);
-		/*RPeak = detect(MWI);
-		if(RPeak){
-			printf("%i \n",RPeak);
-		} */
-		printf("%i \n",MWI);
+
+		detect(MWI);
+
+		//printf("%i \n",MWI);
 
 		temp = getNextData();
 	}

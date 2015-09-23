@@ -1,4 +1,5 @@
 #include "filters.h"
+#include <stdio.h>
 
 void storePeak(int);
 void checkThreshold(int);
@@ -10,10 +11,16 @@ void peak2Update(int);
 void commonUpdate(int);
 int calcRRAve(int[]);
 void searchBack();
+void checkRRMiss(int);
 
 static int x[3] = {0};
 static int spkf, npkf, threshold1, threshold2;
-static int rr,rr_average1, rr_average2, rr_low, rr_high, rr_miss;
+static int rr;
+static int rr_average1 = 0;
+static int rr_average2 = 0;
+static int rr_low = 0;
+static int rr_high = 0;
+static int rr_miss = 0;
 
 //rPeak consists of the peak value and a timestamp. Row 0 is peaks and Row 1 is the time
 //See storeRpeak
@@ -73,7 +80,11 @@ void checkForRR(){
 		rr_average2 = calcRRAve(recentRR_OK);
 		rr_average1 = calcRRAve(recentRR);
 		commonUpdate(rr_average2);
+
+	} else {
+		checkRRMiss(rr);
 	}
+
 }
 
 //stores Rpeak. Takes the peak value as argument. Timer should be known globally within detect.c
@@ -83,6 +94,13 @@ void storeRPeak(int x){
 	//Stores timer value in row 1, and column number equal the header
 	rPeak[1][hRPeak]=timer;
 	hRPeak = (hRPeak + 1) % 500;
+
+	// Print the latest R-peak, time and if needed a warning to console
+	if (x<2000){
+		printf("WARNING! Low R-peak");
+	}
+	printf("Latest R-peak: %d detected at %d", x, timer);
+
 }
 
 //Stores recent RR value
@@ -127,7 +145,7 @@ int calcRRAve(int x[]){
 	return average;
 }
 
-
+// Looks back to see if there is an R-peak that needs to be classified
 void searchBack(){
 	int hsB = hpeaks;
 	for (int i=0; i<500; i++) {
@@ -146,9 +164,5 @@ void checkRRMiss(int x){
 		searchBack();
 	}
 }
-
-
-
-
 
 
