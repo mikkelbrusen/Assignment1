@@ -13,7 +13,7 @@ int calcRRAve(int[]);
 void searchBack();
 void checkRRMiss(int);
 
-static int x[3] = {0};
+static int data[3] = {0};
 static int spkf, npkf, threshold1, threshold2;
 static int rr;
 static int rr_average1 = 0;
@@ -37,18 +37,20 @@ static int hRPeak = 0;
 void gatherFT(int mwiValue, int index){
 	//Increment timer for first to values
 	timer++;
-	x[index] = mwiValue;
+	data[index] = mwiValue;
 }
 
 //Reads new data, and detects peaks
 void detect(int mwiValue ){
 	//Increment timer each time we read a new value
 	timer++;
-	x[2] = mwiValue;
-	if (x[0] < x[1] && x[1] > x[2]){
-		storePeak(x[1]);
-		checkThreshold(x[1]);
+	data[2] = mwiValue;
+	if (data[0] < data[1] && data[1] > data[2]){
+		storePeak(data[1]);
+		checkThreshold(data[1]);
 	}
+	data[0]=data[1];
+	data[1]=data[2];
 }
 
 //Stores a peak value into peaks
