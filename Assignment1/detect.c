@@ -50,8 +50,8 @@ void detect(int mwiValue ){
 		storePeak(data[1]);
 		checkThreshold(data[1]);
 		slope = 0;
-	} else{
-
+	} else if(data[2]>data[1]){
+		slope = 1;
 	}
 	data[0]=data[1];
 	data[1]=data[2];
@@ -77,10 +77,11 @@ void checkThreshold(int x){
 //Checking RRvalue if its higher than rr_low and lower than rr_high
 void checkForRR(){
 	//Calculating RR which is the time from the current peak to the last peak
-	rr = rPeak[1][hRPeak]-rPeak[1][(hRPeak+499)%500];
+	static int rtprev = 0;
+	rr = timer - rtprev;
 	//Checks if interval is OK
 	if(rr_low < rr && rr < rr_high){
-		storeRPeak(rr);
+		storeRPeak(data[1]);
 		storeRecentRR(rr);
 		storeRecentOK(rr);
 		rr_average2 = calcRRAve(recentRR_OK);
