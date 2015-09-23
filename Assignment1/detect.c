@@ -13,23 +13,25 @@ int calcRRAve(int[]);
 void searchBack();
 void checkRRMiss(int);
 
-static int data[3] = {0};
-static int spkf, npkf, threshold1, threshold2;
-static int rr;
-static int rr_average1 = 0;
-static int rr_average2 = 0;
-static int rr_low = 0;
-static int rr_high = 0;
-static int rr_miss = 0;
-
 //rPeak consists of the peak value and a timestamp. Row 0 is peaks and Row 1 is the time
 //See storeRpeak
 static int rPeak[2][500]= {0};
+static int data[3] = {0};
+static int spkf = 4500;
+static int npkf = 1000;
+static int threshold1 = 1875;
+static int threshold2 = 938;
+static int rr;
+static int rr_average1 = 150;
+static int rr_average2 = 150;
+static int rr_low = 138;
+static int rr_high = 174;
+static int rr_miss = 249;
 static int recentRR_OK[500]= {0};
 static int recentRR[500] = {0};
 static int peaks[500] = {0};
 static int hpeaks = 0;
-static int timer = 0;
+static int timer = -1;
 static int hRPeak = 0;
 
 
@@ -79,6 +81,7 @@ void checkForRR(){
 	//Calculating RR which is the time from the current peak to the last peak
 	static int rtprev = 0;
 	rr = timer - rtprev;
+	rtprev = timer;
 	//Checks if interval is OK
 	if(rr_low < rr && rr < rr_high){
 		storeRPeak(data[1]);
@@ -106,7 +109,7 @@ void storeRPeak(int x){
 	if (x<2000){
 		printf("WARNING! Low R-peak");
 	}
-	printf("Latest R-peak: %d detected at %d", x, timer);
+	printf("Latest R-peak: %d detected at %d \n", x, timer);
 
 }
 
