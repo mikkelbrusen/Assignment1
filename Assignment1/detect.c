@@ -9,7 +9,7 @@ void storeRecentRR(int);
 void storeRecentOK(int);
 void peak2Update(int);
 void commonUpdate(int);
-int calcRRAve(int[]);
+int calcRRAve(int[],int);
 void searchBack();
 void checkRRMiss(int);
 
@@ -33,6 +33,8 @@ static int peaks[500] = {0};
 static int hpeaks = 0;
 static int timer = -1;
 static int hRPeak = 0;
+static int recentRRlength = 0;
+static int recentOKlength = 0;
 
 
 //Reads in the first two data points
@@ -47,6 +49,9 @@ void detect(int mwiValue ){
 	static int slope = 0;
 	//Increment timer each time we read a new value
 	timer++;
+	if(timer>311){
+		//int test = 5/0;
+	}
 	data[2] = mwiValue;
 	if (data[1] > data[2] && slope){
 		storePeak(data[1]);
@@ -87,8 +92,8 @@ void checkForRR(){
 		storeRPeak(data[1]);
 		storeRecentRR(rr);
 		storeRecentOK(rr);
-		rr_average2 = calcRRAve(recentRR_OK);
-		rr_average1 = calcRRAve(recentRR);
+		rr_average2 = calcRRAve(recentRR_OK,recentOKlength);
+		rr_average1 = calcRRAve(recentRR,recentRRlength);
 		commonUpdate(rr_average2);
 
 	} else {
@@ -115,6 +120,9 @@ void storeRPeak(int x){
 
 //Stores recent RR value
 void storeRecentRR(int x){
+	if(recentRRlength<500){
+		recentRRlength++;
+	}
 	static int hRecent = 0;
 	recentRR[hRecent]=x;
 	hRecent = (hRecent + 1) % 500;
@@ -122,6 +130,9 @@ void storeRecentRR(int x){
 
 //Stores recent RR value, which was OK (correctly inside the interval)
 void storeRecentOK(int x){
+	if(recentOKlength<500){
+		recentOKlength++;
+	}
 	static int hRecentOK = 0;
 	recentRR_OK[hRecentOK] = x;
 	hRecentOK = (hRecentOK+1) % 500;
@@ -132,7 +143,7 @@ void peak2Update(int peak){
 	storeRPeak(peak);
 	spkf = 0.25*peak + 0.75*spkf;
 	storeRecentRR(rr);
-	rr_average1 = calcRRAve(recentRR);
+	rr_average1 = calcRRAve(recentRR,recentRRlength);
 	commonUpdate(rr_average1);
 }
 
@@ -146,13 +157,12 @@ void commonUpdate(int rr_av){
 }
 
 //Calculates Average of RR recent values (both OK and regular)
-int calcRRAve(int x[]){
-	int length = sizeof(x)/sizeof(x[0]);
+int calcRRAve(int x[],int length){
 	int average = 0;
 	for(int i = 0; i<length; i++){
 		average += x[i];
 	}
-	return average;
+	return average/length;
 }
 
 // Looks back to see if there is an R-peak that needs to be classified
