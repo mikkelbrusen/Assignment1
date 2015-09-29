@@ -72,12 +72,19 @@ void storePeak(int x){
 
 //Checks if peak is higher than threshold1
 void checkThreshold(int x){
+	static int counter = 0;
 	if(x > threshold1){
 		checkForRR();
+		counter = 0;
 	} else{
 		npkf = 0.125*x + 0.875*npkf;
 		threshold1 = npkf + 0.25*(spkf-npkf);
 		threshold2 = 0.5*threshold1;
+		counter ++;
+		if(counter>4){
+			printf("WARNING: Heart Stop; Timer: %d \n",timer);
+			counter = 0;
+		}
 	}
 }
 
@@ -99,7 +106,7 @@ void checkForRR(){
 	} else {
 		counter++;
 		if(counter>4){
-			printf("WARNING: DEAD MAN; Timer: %d \n",timer);
+			printf("WARNING: Weird Heartbeats; Timer: %d \n",timer);
 			counter = 0;
 		}
 		checkRRMiss(rr);
