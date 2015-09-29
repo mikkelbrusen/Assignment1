@@ -3,7 +3,9 @@
 #include "filters.h"
 
 int main() {
+
 	readFile();
+
 	filter();
 
 	return 0;

@@ -120,13 +120,21 @@ void storeRPeak(int x){
 	rPeak[0][hRPeak]=x;
 	//Stores timer value in row 1, and column number equal the header
 	rPeak[1][hRPeak]=timer;
+
+	//Calculate pulse by looking at the last 10 R-peaks and finding R-peak/sec and then R-peak/min
+	int timerDiff = rPeak[1][hRPeak]-rPeak[1][(hRPeak+491)%500];
+	int pulse = (10/(timerDiff*0.004))*60;
+
 	hRPeak = (hRPeak + 1) % 500;
 
 	// Print the latest R-peak, time and if needed a warning to console
 	if (x<2000){
 		printf("WARNING! Low R-peak");
 	}
-	printf("Timer: %d ; R-peak: %d ; Threshold: %d \n", timer, x, threshold1);
+	printf("Timer: %d ; Pulse: %d R-peak: %d \n", timer, pulse, x);
+
+
+
 
 }
 
@@ -197,5 +205,6 @@ void checkRRMiss(int rr){
 		searchBack();
 	}
 }
+
 
 
