@@ -26,7 +26,6 @@ void filter(){
 		temp = getNextData();
 	}
 
-	// TODO: Find another way to end while loop
 	while(getNextDataValid()){
 		LP = lowPass(temp);
 		HP = highPass(LP);

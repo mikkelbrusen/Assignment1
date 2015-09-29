@@ -12,8 +12,7 @@ int getNextData(){
 		validData = 1;
 		return value;
 	} else{
-		validData = 0;
-		return 9999;
+		return validData = 0;
 	}
 }
 
